@@ -171,14 +171,27 @@ class Grid:
     def find_neighbors(self, row, col):
         neighbors = []
 
+        # add row neighbors
         if row > 0:
             neighbors.append((row - 1, col))
         if row + 1 < len(self.board):
             neighbors.append((row + 1, col))
+
+        # add column neighbors
         if col > 0:
             neighbors.append((row, col - 1))
         if col + 1 < len(self.board[0]):
             neighbors.append((row, col + 1))
+
+        # add corner neighbors
+        if row > 0 and col > 0:
+            neighbors.append((row - 1, col - 1))
+        if row > 0 and col + 1 < len(self.board[0]):
+            neighbors.append((row - 1, col + 1))
+        if row + 1 < len(self.board) and col > 0:
+            neighbors.append((row + 1, col - 1))
+        if row + 1 < len(self.board) and col + 1 < len(self.board[0]):
+            neighbors.append((row + 1, col + 1)) 
 
         return neighbors
 
