@@ -15,7 +15,6 @@ pygame.display.set_caption('Shortest Path Finder')
 # Colors:
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
-GREY = (128, 128, 128)
 RED = (255, 0, 0)
 GREEN = (0, 255, 0)
 YELLOW = (255, 255, 0)
@@ -23,8 +22,6 @@ YELLOW = (255, 255, 0)
 # Fonts:
 FONT_CUBE = pygame.font.SysFont('serif', 40)
 FONT_GRID = pygame.font.SysFont('serif', 40)
-
-# -------------------
 
 def find_start(board, start):
     for i, row in enumerate(board):
@@ -42,41 +39,13 @@ def find_end(board, end):
 
     return None
 
-def find_neighbors(maze, row, col):
-    neighbors = []
-
-    if row > 0:
-        neighbors.append((row - 1, col))
-    if row + 1 < len(maze):
-        neighbors.append((row + 1, col))
-    if col > 0:
-        neighbors.append((row, col - 1))
-    if col + 1 < len(maze[0]):
-        neighbors.append((row, col + 1))
-
-    return neighbors
-
 def draw_game_over(text):
     draw_text = FONT_GRID.render(text, 1, RED)
     WIN.blit(draw_text, (WIDTH//2 - draw_text.get_width()//2, HEIGHT//2 - draw_text.get_height()//2))
     pygame.display.update()
     pygame.time.delay(5000)
 
-# -------------------------------------------------
-
 class Grid:
-
-    # board = [
-    # ["#", "O", "#", "#", "#", "#", "#", "#", "#"],
-    # ["#", " ", " ", " ", " ", " ", " ", " ", "#"],
-    # ["#", " ", "#", "#", " ", "#", "#", " ", "#"],
-    # ["#", " ", "#", "#", " ", " ", "#", " ", "#"],
-    # ["#", " ", "#", " ", "#", " ", "#", " ", "#"],
-    # ["#", " ", "#", " ", "#", " ", "#", " ", "#"],
-    # ["#", " ", "#", " ", "#", " ", "#", "#", "#"],
-    # ["#", " ", " ", " ", " ", " ", " ", " ", "#"],
-    # ["#", "#", "#", "#", "#", "#", "#", "X", "#"]
-    # ]
 
     board = [
     ["#", "O", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#"],
@@ -91,7 +60,7 @@ class Grid:
     ["#", " ", "#", "#", "#", "#", "#", " ", " ", "#", " ", " ", " ", " ", " ", " ", " ", "#"],
     ["#", " ", " ", " ", " ", " ", " ", " ", " ", "#", " ", " ", " ", " ", " ", " ", " ", "#"],
     ["#", " ", "#", "#", " ", "#", "#", "#", "#", "#", " ", "#", "#", " ", "#", "#", " ", "#"],
-    ["#", " ", "#", "#", " ", " ", "#", " ", " ", " ", " ", "#", "#", " ", " ", "#", " ", "#"],
+    ["#", " ", "#", "#", " ", " ", "#", " ", " ", "#", " ", "#", "#", " ", " ", "#", " ", "#"],
     ["#", " ", "#", " ", "#", " ", "#", " ", " ", "#", " ", "#", " ", "#", " ", "#", " ", "#"],
     ["#", " ", "#", " ", "#", " ", "#", " ", " ", "#", " ", "#", " ", "#", " ", "#", " ", "#"],
     ["#", " ", "#", " ", "#", " ", "#", "#", " ", "#", " ", "#", " ", "#", " ", "#", "#", "#"],
@@ -172,7 +141,7 @@ class Grid:
                 self.draw_shortest_path('Shortest path: ' + str(len(path)) + ' steps', path)
                 return
 
-            neighbors = find_neighbors(self.model, row, col)
+            neighbors = self.find_neighbors(row, col)
             for neighbor in neighbors:
                 if neighbor in visited:
                     continue
@@ -198,6 +167,20 @@ class Grid:
         WIN.blit(draw_text, (WIDTH//2 - draw_text.get_width()//2, HEIGHT//2 - draw_text.get_height()//2))
         pygame.display.update()
         pygame.time.delay(5000)
+
+    def find_neighbors(self, row, col):
+        neighbors = []
+
+        if row > 0:
+            neighbors.append((row - 1, col))
+        if row + 1 < len(self.board):
+            neighbors.append((row + 1, col))
+        if col > 0:
+            neighbors.append((row, col - 1))
+        if col + 1 < len(self.board[0]):
+            neighbors.append((row, col + 1))
+
+        return neighbors
 
 
 class Cube:
