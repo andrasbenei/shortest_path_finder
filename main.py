@@ -2,10 +2,6 @@ import pygame
 pygame.font.init()
 import queue
 
-import logging
-logger = logging.getLogger(__name__)
-logging.basicConfig(filename='C:/Users/andra/OneDrive/Desktop/python/Shortest Path Finder/path_main.log', level=logging.INFO, format='[%(asctime)s] %(levelname)s: %(name)s: #%(lineno)d: %(message)s')
-
 # Window setup:
 
 WIDTH, HEIGHT = 540, 600
